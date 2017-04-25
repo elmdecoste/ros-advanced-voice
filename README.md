@@ -4,9 +4,7 @@ First year research project for the Gates Dell Complex's Building Wide Intellige
 ## Program Outline:
 
 ### Speech API 
-
-   * Responsible for the speech-to-text functionality of the application. Will integrate with
-    cloud speech-to-text software to utilize existing datasets and functionality. *
+Responsible for the speech-to-text functionality of the application. Will integrate with cloud speech-to-text software to utilize existing datasets and functionality.
 
     ```
     Broadcast: {
@@ -16,8 +14,7 @@ First year research project for the Gates Dell Complex's Building Wide Intellige
     ```
 
 ### Command Processer
-
-    * Primary function is to parse the commands and break them into their multi-step functions *
+Primary function is to parse the commands and break them into their multi-step functions.
 
     ```
     Listen: { 
@@ -39,11 +36,9 @@ First year research project for the Gates Dell Complex's Building Wide Intellige
     ```
 
 ### Scheduler
-    
-        * Abstraction of the command running logic to its own Node
+Abstraction of the command running logic to its own Node
 
-        NOTE: If the scheduler recieves a new instruction set, it will stop the previous
-        instructions and continue with the newly received ones. *
+NOTE: If the scheduler recieves a new instruction set, it will stop the previous instructions and continue with the newly received ones.
 
     ```
     Listen: {
