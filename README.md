@@ -15,7 +15,7 @@ First year research project for the Gates Dell Complex's Building Wide Intellige
     }
     ```
 
-### Command Processer
+### Command Processor
 
     * Primary function is to parse the commands and break them into their multi-step functions *
 
