@@ -1,43 +1,44 @@
 import rospy
 from std_msgs.msg import String
 from std_msgs.msg import Bool
-import Queue
 
 import re
 
 available_commands = [
-    ("go", "^go\s*(\\bto\\b|\\bthrough\\b)\\s*(.*)$"),
-    ("get", "^get\\s(.*)$"),
-    ("say", "^say\\s(.*)$")
-    ]
+    ("go", "^go\s*(\\bto\\b|\\bthrough\\b|\\bget\\b)\\s*(.*)$", 2),
+    ("get", "^get\\s(.*)$", 1),
+    ("say", "^say\\s(.*)$", 1)
+]
 
-#Lights => segbot_led
-#Turn
-#Move
-#Navigation
-#Say => sound_play
+# Lights => segbot_led
+# Turn =>
+# Move =>
+# Navigation =>
+# Say => sound_play
 
 available_separators = "and|then"
 
 
-class CommandProcessor():
+class CommandProcessor:
     """
     ROS Processor class
     """
 
-
-    def __init__(self, separators, commands):  
+    def __init__(self, separators, commands):
         rospy.init_node('command_processor', anonymous=True)
 
         self.command = ""
         self.status = False
-        self.rate = rospy.Rate(10) # 10hz
+        self.rate = rospy.Rate(10)  # 10hz
         self.separator_regex = separators
         self.commands = commands
+        self.separator = '///'
 
         self.speech_listener = rospy.Subscriber('/autospeech/receive', String, self.received_command)
 
         self.status_listener = rospy.Subscriber('/autospeech/status', Bool, self.update_status)
+
+        self.cmd_publisher = rospy.Publisher('/autospeech/run', String, queue_size=10)
 
         rospy.spin()
 
@@ -52,15 +53,18 @@ class CommandProcessor():
 
         for cmd in self.split:
             self.process(cmd.strip())
-
-        print self.split
+        print "\n"
 
     def process(self, cmd):
         for available_cmd in self.commands:
             if cmd.find(available_cmd[0]) != -1:
-                print "its a: " + available_cmd[0]
-                print "destination: %s" % re.split(available_cmd[1], cmd)
+                command = available_cmd[0]
+                params = re.split(available_cmd[1], cmd)[available_cmd[2]]
 
+                print "Command: " + available_cmd[0]
+                print "Parameters: %s" % params
+
+                self.cmd_publisher.publish(command + self.separator + params)
 
     def update_status(self, data):
         """
