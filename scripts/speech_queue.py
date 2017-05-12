@@ -61,7 +61,12 @@ class CommandScheduler:
         goal.target_pose.header.stamp = genpy.Time()
         goal.target_pose.header.frame_id = "/base_link"
 
-        goal.target_pose.pose.position.x = 1.0
+        dirs = {
+            'forward': 1.0,
+            'backward': -1.0
+        }
+
+        goal.target_pose.pose.position.x = dirs[location]
         goal.target_pose.pose.orientation.w = 1.0
 
         return Command('/move_base', MoveBaseAction, goal)
