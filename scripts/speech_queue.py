@@ -89,7 +89,7 @@ class CommandScheduler:
         goal.target_pose.pose.position.z = 0.0
         goal.target_pose.pose.orientation = transformations.quaternion_from_euler(0, 0, dirs[direction], 'ryxz')
 
-        return Command('/move_base', MoveBaseGoal, goal)
+        return Command('/move_base', MoveBaseAction, goal)
 
 
 if __name__ == '__main__':
