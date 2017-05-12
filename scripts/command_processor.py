@@ -1,22 +1,21 @@
+#!/usr/bin/env python
 import rospy
 from std_msgs.msg import String
 from std_msgs.msg import Bool
-
 import re
 
 available_commands = [
-    ("go", "^go\s*(\\bto\\b|\\bthrough\\b|\\bget\\b)\\s*(.*)$", 2),
-    ("get", "^get\\s(.*)$", 1),
-    ("say", "^say\\s(.*)$", 1)
+    ("go", "\\bforwards?\\b|\\bbackwards?\\b"),
+    ("turn", "\\bleft\\b|\\bright\\b"),
+    ("say", "^say\s*(.*)")
 ]
 
 # Lights => segbot_led
 # Turn =>
 # Move =>
-# Navigation =>
 # Say => sound_play
 
-available_separators = "and|then"
+available_separators = "\\band\\b|\\bthen\\b"
 
 
 class CommandProcessor:
@@ -50,7 +49,7 @@ class CommandProcessor:
 
         lowered = self.command.lower()
         self.split = re.split(self.separator_regex, lowered)
-
+        rospy.loginfo(lowered)
         for cmd in self.split:
             self.process(cmd.strip())
         print "\n"
@@ -59,12 +58,17 @@ class CommandProcessor:
         for available_cmd in self.commands:
             if cmd.find(available_cmd[0]) != -1:
                 command = available_cmd[0]
-                params = re.split(available_cmd[1], cmd)[available_cmd[2]]
+                params = re.findall(available_cmd[1], cmd)
 
-                print "Command: " + available_cmd[0]
-                print "Parameters: %s" % params
+                if not len(params) > 0:
+                    rospy.logerr("Command not processed")
+                    break
 
-                self.cmd_publisher.publish(command + self.separator + params)
+                rospy.loginfo("Command: " + available_cmd[0])
+                rospy.loginfo("Parameters: %s" % params[0])
+
+                self.cmd_publisher.publish(command + self.separator + params[0])
+                break
 
     def update_status(self, data):
         """

@@ -1,24 +1,36 @@
+#!/usr/bin/env python
 # BWI_Tasks visid_list_gui.cpp
 
 import rospy
 from std_msgs.msg import String
 
 
-class speech_api:
+class SpeechApi:
     def __init__(self):
-        pub = rospy.Publisher('/autospeech/receive', String, queue_size=10)
         rospy.init_node('speech_api', anonymous=True)
+
+        pub = rospy.Publisher('/autospeech/receive', String, queue_size=10)
+        sub = rospy.Subscriber('/recognizer/output', String, self.received_speech)
         rate = rospy.Rate(10)  # 10hz
 
+        self.currentText = ""
+
         while not rospy.is_shutdown():
-            hello_str = "go to this location and get some stuff then say boo"
-            rospy.loginfo(hello_str)
-            pub.publish(hello_str)
+
+            if len(self.currentText) > 0:
+                hello_str = "say you are a bitch"
+                rospy.loginfo(self.currentText)
+                pub.publish(self.currentText)
+                self.currentText = ""
             rate.sleep()
+
+    def received_speech(self, data):
+        rospy.loginfo("Received: " + data.data)
+        self.currentText = data.data
 
 
 if __name__ == '__main__':
     try:
-        speech_api()
+        SpeechApi()
     except rospy.ROSInterruptException:
         pass

@@ -1,6 +1,17 @@
 # ros-advanced-voice
 First year research project for the Gates Dell Complex's Building Wide Intelligence Initiative
 
+## Running the program:
+
+### Updating microphone source:
+The microphone source needs to be set within the launch file. To set it, run
+```$ pacmd list-sources```
+Use the output from this to find the desired microphone for the system you are running on
+
+### Launching
+A launch file has been provided to startup all the required dependencies. To start:
+```$ roslaunch ros_advanced_voice bringup.launch```
+
 ## Program Outline:
 
 ### Speech API 

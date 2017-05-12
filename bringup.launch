@@ -1,0 +1,19 @@
+<launch>
+
+  <node name="recognizer" pkg="pocketsphinx" type="recognizer.py">
+    <param name="lm" value="$(find ros_advanced_voice)/models/8939.lm"/>
+    <param name="dict" value="$(find ros_advanced_voice)/models/8939.dic"/>
+    <param name="mic_name" value="alsa_input.pci-0000_00_1b.0.analog-stereo"/>
+  </node>
+
+  <node name="voice_cmd_vel" pkg="pocketsphinx" type="voice_cmd_vel.py" output="screen">
+    <remap from="cmd_vel" to="turtlebot_node/cmd_vel"/>
+  </node>
+
+    <node name="soundplay_node" pkg="sound_play" type="soundplay_node.py"> </node>
+
+    <node name="speech_api" pkg="ros_advanced_voice" type="speech_api.py"> </node>
+    <node name="speech_queue" pkg="ros_advanced_voice" type="speech_queue.py"> </node>
+    <node name="command_processor" pkg="ros_advanced_voice" type="command_processor.py"> </node>
+
+</launch>
