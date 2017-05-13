@@ -5,12 +5,16 @@ First year research project for the Gates Dell Complex's Building Wide Intellige
 
 ### Updating microphone source:
 The microphone source needs to be set within the launch file. To set it, run
-```$ pacmd list-sources```
+```
+$ pacmd list-sources
+```
 Use the output from this to find the desired microphone for the system you are running on
 
 ### Launching
 A launch file has been provided to startup all the required dependencies. To start:
-```$ roslaunch ros_advanced_voice bringup.launch```
+```
+$ roslaunch ros_advanced_voice bringup.launch
+```
 
 ## Program Outline:
 
@@ -34,33 +38,22 @@ Primary function is to parse the commands and break them into their multi-step f
         Receive: String
     }
 
-    Listen: {
-        Node: "/autospeech/status"
-        Function: Check if the scheduler is currently executing
-        Receive: Boolean
-    }
-
     Broadcast: {
         Node: "/autospeech/run"
-        Data: JSON
+        Data: String
     }
     ```
 
 ### Scheduler
 Abstraction of the command running logic to its own Node
 
-NOTE: If the scheduler recieves a new instruction set, it will stop the previous instructions and continue with the newly received ones.
+NOTE: The scheduler will continually queue new commands that it receives from the processor
 
     ```
     Listen: {
         Node: "/autospeech/run"
         Function: Sequentially run the commands requested
-        Receive: JSON
-    }
-
-    Broadcast: {
-        Node: "/autospeech/status"
-        Data: Boolean
+        Receive: String
     }
     ```
 
