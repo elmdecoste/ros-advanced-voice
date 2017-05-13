@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# BWI_Tasks visid_list_gui.cpp
 
 import rospy
 from std_msgs.msg import String
@@ -18,7 +17,6 @@ class SpeechApi:
         while not rospy.is_shutdown():
 
             if len(self.currentText) > 0:
-                hello_str = "say you are a bitch"
                 rospy.loginfo(self.currentText)
                 pub.publish(self.currentText)
                 self.currentText = ""
