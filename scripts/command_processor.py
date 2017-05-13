@@ -10,11 +10,6 @@ available_commands = [
     ("say", "^say\s*(.*)")
 ]
 
-# Lights => segbot_led
-# Turn =>
-# Move =>
-# Say => sound_play
-
 available_separators = "\\band\\b|\\bthen\\b"
 
 
@@ -27,15 +22,12 @@ class CommandProcessor:
         rospy.init_node('command_processor', anonymous=True)
 
         self.command = ""
-        self.status = False
         self.rate = rospy.Rate(10)  # 10hz
         self.separator_regex = separators
         self.commands = commands
         self.separator = '///'
 
         self.speech_listener = rospy.Subscriber('/autospeech/receive', String, self.received_command)
-
-        self.status_listener = rospy.Subscriber('/autospeech/status', Bool, self.update_status)
 
         self.cmd_publisher = rospy.Publisher('/autospeech/run', String, queue_size=10)
 
@@ -69,12 +61,6 @@ class CommandProcessor:
 
                 self.cmd_publisher.publish(command + self.separator + params[0])
                 break
-
-    def update_status(self, data):
-        """
-        :param data: boolean on if the scheduler will accept a new dataset
-        """
-        self.status = data.data
 
 
 if __name__ == "__main__":
