@@ -67,3 +67,6 @@ Candace Kamm, Marilyn Walker, Lawrence Rabiner, The role of speech processing in
 
 G. Saridis, "Intelligent robotic control," in IEEE Transactions on Automatic Control, vol. 28, no. 5, pp. 547-557, May 1983. doi: 10.1109/TAC.1983.1103278
 (http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=1103278&isnumber=24201)
+
+Chelba, Ciprian, and Frederick Jelinek. "Structured language modeling." Computer Speech & Language 14.4 (2000): 283-332.
+(http://www.sciencedirect.com/science/article/pii/S0885230800901475)
