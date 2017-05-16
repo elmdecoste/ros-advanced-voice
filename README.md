@@ -57,6 +57,9 @@ NOTE: The scheduler will continually queue new commands that it receives from th
     }
     ```
 
+## Example
+https://youtu.be/poMabkYfZCw
+
 ## Papers
 
 Collobert, Ronan, et al. "Natural language processing (almost) from scratch." Journal of Machine Learning Research 12.Aug (2011): 2493-2537.
