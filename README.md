@@ -3,6 +3,13 @@ First year research project for the Gates Dell Complex's Building Wide Intellige
 
 ## Running the program:
 
+### PocketSphinx
+PocketSphinx needs to be installed on the computer that is running the library. 
+To install:
+```
+$ rosdep install pocketsphinx
+```
+
 ### Updating microphone source:
 The microphone source needs to be set within the launch file. To set it, run
 ```
